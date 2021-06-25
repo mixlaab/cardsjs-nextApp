@@ -1,4 +1,4 @@
-import { Deck } from "./../../../lib/deck";
+import { Deck } from "../../../lib/game";
 
 const deck = new Deck();
 
