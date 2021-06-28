@@ -2,8 +2,34 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import Deck from "../components/Deck";
+import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 
-export default function Home() {
+const { GRAPHQL_SERVER } = process.env;
+
+const client = new ApolloClient({
+  uri: GRAPHQL_SERVER,
+  cache: new InMemoryCache(),
+});
+
+const tableQuery = gql`
+  query {
+    table {
+      number
+      symbol
+    }
+  }
+`;
+
+const getCardsQuery = gql`
+  query($size: Int) {
+    getCards(size: $size) {
+      number
+      symbol
+    }
+  }
+`;
+
+export default function Home(props) {
   return (
     <div>
       <Head>
@@ -13,11 +39,36 @@ export default function Home() {
       </Head>
       <div>
         <header>
-          <h1 className={styles["main-title"]}>Card.js</h1>
-          <Deck title="Table" path="cards" flipped="3" />
-          <Deck title="Hand" path="cards/2" flipped="2" />
+          <h1 className={styles["main-title"]}>{props.title}</h1>
+          <Deck title="Table" cards={props.table} flipped="3" />
+          <Deck title="Hand" cards={props.hand} flipped="2" />
         </header>
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const tableData = await client.query({
+    query: tableQuery,
+  });
+
+  const handData = await client.query({
+    query: getCardsQuery,
+    variables: {
+      size: 2,
+    },
+    fetchPolicy: "no-cache",
+  });
+
+  console.log(tableData.data.table);
+  console.log(handData.data.getCards);
+
+  return {
+    props: {
+      title: "Cards.js",
+      table: tableData.data.table,
+      hand: handData.data.getCards,
+    }, // will be passed to the page component as props
+  };
 }
