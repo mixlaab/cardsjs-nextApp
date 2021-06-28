@@ -1,0 +1,165 @@
+@import "./positions";
+
+.card {
+  .symbols {
+    position: relative;
+    height: 100%;
+    div {
+      position: absolute;
+    }
+  }
+
+  &[number="A"] {
+    .symbols div {
+      @include center(3);
+    }
+  }
+
+  &[number="2"],
+  &[number="3"] {
+    .symbols div {
+      &:nth-child(1) {
+        @include top();
+      }
+      &:nth-child(2) {
+        @include bottom();
+      }
+    }
+  }
+
+  &[number="3"],
+  &[number="5"],
+  &[number="9"] {
+    .symbols div {
+      &:last-child {
+        @include center(1.5);
+      }
+    }
+  }
+
+  &[number="4"],
+  &[number="5"],
+  &[number="6"],
+  &[number="7"],
+  &[number="8"],
+  &[number="9"],
+  &[number="10"] {
+    .symbols div {
+      &:nth-child(1) {
+        @include top-left();
+      }
+      &:nth-child(2) {
+        @include bottom-left();
+      }
+      &:nth-child(3) {
+        @include top-right();
+      }
+      &:nth-child(4) {
+        @include bottom-right();
+      }
+    }
+  }
+
+  &[number="6"],
+  &[number="7"],
+  &[number="8"] {
+    .symbols div {
+      &:nth-child(5) {
+        @include middle-left();
+      }
+      &:nth-child(6) {
+        @include middle-right();
+      }
+      &:nth-child(7) {
+        @include center-top();
+      }
+      &:nth-child(8) {
+        @include center-bottom();
+      }
+    }
+  }
+
+  &[number="9"],
+  &[number="10"] {
+    .symbols div {
+      &:nth-child(5) {
+        @include middletop-left();
+      }
+      &:nth-child(6) {
+        @include middlebottom-left();
+      }
+      &:nth-child(7) {
+        @include middletop-right();
+      }
+      &:nth-child(8) {
+        @include middlebottom-right();
+      }
+    }
+  }
+
+  &[number="10"] {
+    .symbols div {
+      &:nth-child(9) {
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%) scale(1.5);
+      }
+      &:nth-child(10) {
+        bottom: 25%;
+        left: 50%;
+        transform: translateX(-50%) translateY(50%) scale(1.5) rotate(0.5turn);
+      }
+    }
+  }
+
+  &[number="J"],
+  &[number="Q"],
+  &[number="K"] {
+    .symbols {
+      background-image: url("./images/cards_transparent.png");
+      background-size: 326px 538px;
+    }
+  }
+
+  &[number="J"] {
+    .symbols {
+      background-position-x: -6px;
+    }
+  }
+
+  &[number="Q"] {
+    .symbols {
+      background-position-x: -112px;
+    }
+  }
+
+  &[number="K"] {
+    .symbols {
+      background-position-x: -219px;
+    }
+  }
+
+  &[symbol="♣"] {
+    .symbols {
+      background-position-y: -403px;
+    }
+  }
+
+  &[symbol="♦"] {
+    .symbols {
+      background-position-y: -808px;
+    }
+  }
+
+  &[symbol="♥"] {
+    .symbols {
+      background-position-y: -675px;
+    }
+  }
+
+  &[symbol="♠"] {
+    .symbols {
+      background-position-y: -542px;
+    }
+  }
+}
